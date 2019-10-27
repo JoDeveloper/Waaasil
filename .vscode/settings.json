@@ -1,0 +1,13 @@
+{
+    "editor.fontFamily": "Mono, 'Fira Code','Ubuntu Mono'",
+    "editor.fontSize": 19,
+    "files.autoSaveDelay": 5000,
+    "files.autoSave": "afterDelay",
+    "workbench.colorCustomizations": {},
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.cursorSmoothCaretAnimation": true,
+    "editor.fontLigatures": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveTimeout": 10000
+}
