@@ -1,217 +1,148 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:waaasil/Screens/HomePageTopBarScreen.dart';
+import './tdestination.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Cairo',
-        primarySwatch: Colors.orange,
-      ),
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class TravelHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          TopScreenBar(),
-          SingleChildScrollView(child: bottomScreenBar),
+      body: SafeArea(
+        child: ListView(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text("Hello Raj Kumar,",
+                          style: TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.bold)),
+                      Text(
+                        "Where do you want to go?",
+                        style: TextStyle(color: Colors.grey.shade700),
+                      )
+                    ],
+                  ),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/img/7.jpg'),
+                    radius: 40,
+                  )
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
+              child: Material(
+                elevation: 5.0,
+                child: TextField(
+                  decoration: InputDecoration(
+                      hintText: "Find destination",
+                      prefixIcon: Icon(Icons.location_on),
+                      border: InputBorder.none),
+                ),
+              ),
+            ),
+            GestureDetector(
+                onTap: () => _openDestinationPage(context),
+                child: _buildFeaturedItem(
+                    image: 'assets/travel/kathmandu1.jpg',
+                    title: "Kathmandu",
+                    subtitle: "90 places worth to visit")),
+            GestureDetector(
+                onTap: () => _openDestinationPage(context),
+                child: _buildFeaturedItem(
+                    image: 'assets/travel/fewalake.jpg',
+                    title: "Pokhara",
+                    subtitle: "40 places worth to visit")),
+            _buildItem(title: "Jomsom"),
+            _buildItem(title: "Palpa"),
+            _buildItem(title: "Namche"),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        fixedColor: Colors.red,
+        currentIndex: 0,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.location_searching), title: Text("Discover")),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.location_on), title: Text("Popular")),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), title: Text("Settings")),
         ],
       ),
     );
   }
-}
 
-var bottomScreenBar = Column(
-  verticalDirection: VerticalDirection.down,
-  children: <Widget>[
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            "الحالي",
-            style: TextStyle(fontSize: 16.0, color: Colors.blueAccent),
-          ),
-          Spacer(),
-          Text("عرض الكل (10)",
-              style: TextStyle(fontSize: 16.0, color: Colors.black))
-        ],
-      ),
-    ),
-  ],
-);
-
-List<CityCard> cityCards = [
-  CityCard(
-    imagePath: "assets/images/athens.jpg",
-    name: "الخرطوم",
-    monthYear: "12-2019",
-    discount: 20,
-    oldPrice: 580,
-    newPrice: 500,
-  ),
-  CityCard(
-    imagePath: "assets/images/lasvegas.jpg",
-    name: "دبي",
-    monthYear: "12-2019",
-    discount: 20,
-    oldPrice: 580,
-    newPrice: 500,
-  ),
-  CityCard(
-    imagePath: "assets/images/sydney.jpeg",
-    name: "أديس ابابا",
-    monthYear: "12-2019",
-    discount: 20,
-    oldPrice: 580,
-    newPrice: 500,
-  ),
-];
-
-class CityCard extends StatelessWidget {
-  const CityCard(
-      {Key key,
-      this.imagePath,
-      this.name,
-      this.monthYear,
-      this.discount,
-      this.oldPrice,
-      this.newPrice})
-      : super(key: key);
-
-  final imagePath, name, monthYear, discount, oldPrice, newPrice;
-
-  @override
-  Widget build(BuildContext context) {
-    final formatCurrency = new NumberFormat.simpleCurrency();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  height: 260.0,
-                  width: 160.0,
-                  child: Image.asset(
-                    imagePath,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  left: 0.0,
-                  bottom: 0.0,
-                  width: 160.0,
-                  height: 60.0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                            colors: [Colors.black, Colors.black12])),
-                  ),
-                ),
-                Positioned(
-                  left: 10.0,
-                  bottom: 10.0,
-                  right: 10.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            name,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            monthYear,
-                            style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 2.0, horizontal: 8.0),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.rectangle,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20.0))),
-                        child: Text(
-                          "$discount%",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Column(
-            verticalDirection: VerticalDirection.down,
-            children: <Widget>[
-              Container(
-                height: 210,
-                child: ListView(
-                    scrollDirection: Axis.horizontal, children: cityCards),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: 100.0,
-                    width: 50.0,
-                    color: Colors.pinkAccent,
-                  ),
-                  Text(
-                    formatCurrency.format(oldPrice),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black),
-                  ),
-                  Text(
-                    formatCurrency.format(newPrice),
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal, color: Colors.black),
-                  ),
-                ],
-              )
-            ],
-          )
-        ],
+  Widget _buildItem({String title}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Material(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+        elevation: 5.0,
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          child: Text(title,
+              style: TextStyle(
+                fontSize: 20.0,
+              )),
+        ),
       ),
     );
+  }
+
+  Container _buildFeaturedItem({String image, String title, String subtitle}) {
+    return Container(
+      padding: EdgeInsets.only(left: 16.0, top: 8.0, right: 16.0, bottom: 16.0),
+      child: Material(
+        elevation: 5.0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+        child: Stack(
+          children: <Widget>[
+            ClipRRect(
+                borderRadius: BorderRadius.circular(5.0),
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.cover,
+                )),
+            Positioned(
+              right: 10.0,
+              top: 10.0,
+              child: IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.favorite_border, color: Colors.white),
+              ),
+            ),
+            Positioned(
+              bottom: 20.0,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                color: Colors.black.withOpacity(0.7),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Text(title,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold)),
+                    Text(subtitle, style: TextStyle(color: Colors.white))
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _openDestinationPage(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => DestinationPage()));
   }
 }
