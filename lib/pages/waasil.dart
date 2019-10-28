@@ -187,7 +187,6 @@ class ChoiceChip extends StatefulWidget {
 class _ChoiceChipState extends State<ChoiceChip> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: widget.isflightSelected
